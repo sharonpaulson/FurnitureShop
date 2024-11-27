@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details</title>
+    <style>
+        body {
+            background-color: #f2f4f7; /* Softer gray background */
+            font-family: Arial, sans-serif; /* Clean font choice */
+        }
+        .category-table {
+            width: 100%;
+            margin-top: 30px;
+            padding: 0 15px;
+        }
+        .table {
+            background-color: #ffffff; /* White background for the table */
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden; /* Rounded corners effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-spacing: 0; /* Remove gaps between table cells */
+        }
+        /* Table Header with light grey background and blue text */
+        .table thead {
+            background-color: #f8f9fa; /* Light grey background for the header */
+            color: #007bff; /* Blue text for the header */
+        }
+        .table th {
+            text-transform: uppercase; /* Capitalize headers */
+            letter-spacing: 1px;
+            border-bottom: 2px solid #007bff; /* Blue border under header */
+            padding: 18px;
+            text-align: left;
+        }
+        .table td {
+            padding: 18px;
+            text-align: left;
+            vertical-align: middle; /* Vertically center content */
+            border-bottom: 1px solid #ddd; /* Subtle border between rows */
+        }
+        .table tbody tr:hover {
+            background-color: #f1f7ff; /* Light blue on hover */
+        }
+        .category-image {
+            width: 100px; /* Slightly bigger images */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 8px; /* More rounded image corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for images */
+        }
+        .btn-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+        }
+        .btn-primary {
+            background-color: #1e90ff; /* Dodger Blue for buttons */
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        /* Additional space for smaller screens */
+        @media (max-width: 768px) {
+            .category-table {
+                padding: 0;
+            }
+            .table th, .table td {
+                padding: 12px;
+            }
+            .btn-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'success' %}
+            <script>
+                swal('{{i}}', '', 'success');
+            </script>
+{% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}', '', 'error');
+            </script>
+{% elif i.tags == 'warning' %}
+            <script>
+                swal('{{i}}', '', 'warning');
+            </script>
+{% else %}
+            <script>
+                swal('{{i}}', '', 'info');
+            </script>
+
+{% endif %}
+
+    {% endfor %}
+
+{% endif %}
+<div class="col-sm-12 col-xl-12">
+    <div class="form-container">
+        <h6 class="mb-4" style="font-size: 28px; color: #007bff; text-align: center; font-weight: bold;">
+            Product Details
+        </h6>
+        <table class="table table-hover category-table">
+            <thead>
+            <tr>
+                <th>Product Category</th>
+                <th>Product Name</th>
+                <th>Product Quantity</th>
+                <th>Product MRP</th>
+                <th>Product Description</th>
+                <th>Product Country</th>
+                <th>Manufacture Date</th>
+                <th>Product Image 1</th>
+                <th>Product Image 2</th>
+                <th>Product Image 3</th>
+                <th>Action</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for i in pro %}
+            <tr>
+                <td>{{ i.Product_Category }}</td>
+                <td>{{ i.Product_Name }}</td>
+                <td>{{ i.Product_Quantity }}</td>
+                <td>{{ i.Product_MRP }}</td>
+                <td>{{ i.Product_Description }}</td>
+                <td>{{ i.Product_Country }}</td>
+                <td>{{ i.Product_Mfd }}</td>
+                <td><img src="{{ i.Product_Image1.url }}" width="85px" height="85px" alt="Product Image 1"></td>
+                <td><img src="{{ i.Product_Image2.url }}" width="85px" height="85px" alt="Product Image 2"></td>
+                <td><img src="{{ i.Product_Image3.url }}" width="85px" height="85px" alt="Product Image 3"></td>
+
+                <td>
+                    <div class="btn-container">
+                        <a href="{% url 'edit_products' i.id %}">
+                            <button class="btn btn-primary">Edit</button>
+                        </a>
+                        <a href="#">
+                            <button class="btn btn-primary">Delete</button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

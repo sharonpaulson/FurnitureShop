@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Categories</title>
+    <style>
+        body {
+            background-color: #f2f4f7; /* Softer gray background */
+            font-family: Arial, sans-serif; /* Clean font choice */
+        }
+        .category-table {
+            width: 100%;
+            margin-top: 30px;
+            padding: 0 15px;
+        }
+        .table {
+            background-color: #ffffff; /* White background for the table */
+            border-radius: 12px; /* More rounded corners */
+            overflow: hidden; /* Rounded corners effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            border-spacing: 0; /* Remove gaps between table cells */
+        }
+        /* Table Header with light grey background and blue text */
+        .table thead {
+            background-color: #f8f9fa; /* Light grey background for the header */
+            color: #007bff; /* Blue text for the header */
+        }
+        .table th {
+            text-transform: uppercase; /* Capitalize headers */
+            letter-spacing: 1px;
+            border-bottom: 2px solid #007bff; /* Blue border under header */
+            padding: 18px;
+            text-align: left;
+        }
+        .table td {
+            padding: 18px;
+            text-align: left;
+            vertical-align: middle; /* Vertically center content */
+            border-bottom: 1px solid #ddd; /* Subtle border between rows */
+        }
+        .table tbody tr:hover {
+            background-color: #f1f7ff; /* Light blue on hover */
+        }
+        .category-image {
+            width: 100px; /* Slightly bigger images */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 8px; /* More rounded image corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for images */
+        }
+        .btn-container {
+            display: flex;
+            gap: 10px; /* Space between buttons */
+        }
+        .btn-primary {
+            background-color: #1e90ff; /* Dodger Blue for buttons */
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        /* Additional space for smaller screens */
+        @media (max-width: 768px) {
+            .category-table {
+                padding: 0;
+            }
+            .table th, .table td {
+                padding: 12px;
+            }
+            .btn-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if messages %}
+    {% for i in messages %}
+        {% if i.tags == 'success' %}
+            <script>
+                swal('{{i}}', '', 'success');
+            </script>
+{% elif i.tags == 'error' %}
+            <script>
+                swal('{{i}}', '', 'error');
+            </script>
+{% elif i.tags == 'warning' %}
+            <script>
+                swal('{{i}}', '', 'warning');
+            </script>
+{% else %}
+            <script>
+                swal('{{i}}', '', 'info');
+            </script>
+
+{% endif %}
+
+    {% endfor %}
+
+{% endif %}
+<div class="col-sm-12 col-xl-12">
+    <div class="form-container">
+        <h6 class="mb-4" style="font-size: 28px; color: #007bff; text-align: center; font-weight: bold;">
+            Category Details
+        </h6>
+        <table class="table table-hover category-table">
+            <thead>
+            <tr>
+                <th>Category Name</th>
+                <th>Category Description</th>
+                <th>Category Image</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in category %}
+            <tr>
+                <td>{{ i.Category_Name }}</td>
+                <td>{{ i.Category_Description }}</td>
+                <td>
+                    <img src="{{ i.Category_Image.url }}" class="category-image">
+                </td>
+                <td>
+                    <div class="btn-container">
+                        <a href="{% url 'edit_categories' i.id %}">
+                            <button class="btn btn-primary">Edit</button>
+                        </a>
+                        <a href="{% url 'delete_categories' i.id %}">
+                            <button class="btn btn-primary">Delete</button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+{% endblock %}

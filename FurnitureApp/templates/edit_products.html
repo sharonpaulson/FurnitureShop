@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Products</title>
+    <style>
+        body {
+            background-color: #f2f4f7; /* Softer gray background to match the category display */
+            font-family: Arial, sans-serif; /* Same clean font */
+        }
+
+        .form-container {
+            background-color: #ffffff; /* White form background for consistency */
+            border-radius: 12px; /* Slightly rounded corners for the container */
+            padding: 30px;
+            max-width: 900px;
+            margin: 50px auto; /* Centered container */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Same subtle shadow as in the category display */
+        }
+
+        h6 {
+            font-size: 28px;
+            color: #007bff; /* Consistent Bootstrap Primary Blue for heading */
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            color: #1E90FF; /* Dodger Blue for labels to keep consistency */
+        }
+
+        .form-control {
+            border-color: #1E90FF; /* Dodger Blue border for inputs */
+        }
+
+        .form-control:focus {
+            border-color: #1A6FCE; /* Darker shade of blue on focus */
+            box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); /* Consistent focus effect */
+        }
+
+        .btn-primary {
+            background-color: #1E90FF; /* Dodger Blue button */
+            border-color: #1E90FF;
+            padding: 10px 20px; /* More padding for a larger button */
+            border-radius: 6px; /* Slight rounding to match previous buttons */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .mb-3 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h6>Add Category</h6>
+
+    <form method="post" action="{% url 'update_products' pro_id=pro.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Name input -->
+        <div class="mb-3">
+            <label class="form-label">Product Category</label>
+            <select class="form-control" name="product_category" aria-label="Default select example">
+                <option>{{pro.Product_Category}}</option>
+                {% for i in cat %}
+                <option>{{i.Category_Name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input type="text" value="{{pro.Product_Name}}" name="product_name" class="form-control"
+                   id="productName"
+                   placeholder="Enter product name">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input type="text" value="{{pro.Product_Quantity}}" name="product_quantity" class="form-control"
+                   placeholder="Quantity">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">MRP</label>
+            <input type="text" value="{{pro.Product_MRP}}" name="product_mrp" class="form-control"
+                   placeholder="MRP">
+        </div>
+
+        <!-- Description textarea -->
+        <div class="mb-3">
+            <label for="categoryComment" class="form-label">Description</label>
+            <textarea name="product_desc" class="form-control" id="categoryComment" rows="4"
+                      placeholder="Enter a description for the product">{{pro.Product_Description}}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Country of Origin</label>
+            <input type="text" value="{{pro.Product_Country}}" name="product_country" class="form-control"
+                   placeholder="Country of Origin">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Manufactured By</label>
+            <input type="text" value="{{pro.Product_Mfd}}" name="product_mfd" class="form-control"
+                   placeholder="Manufactured By">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Upload Product Image 1</label>
+            <img src="{{pro.Product_Image1.url}}" width="85px" height="85px">
+            <input name="product_image1" class="form-control" type="file">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Upload Product Image 2</label>
+            <img src="{{pro.Product_Image2.url}}" width="85px" height="85px">
+
+            <input name="product_image2" class="form-control" type="file">
+        </div>
+        <!-- File input -->
+        <div class="mb-3">
+            <label for="categoryFile" class="form-label">Upload Product Image 3</label>
+            <img src="{{pro.Product_Image3.url}}" width="85px" height="85px">
+
+            <input name="product_image3" class="form-control" type="file" id="categoryFile">
+        </div>
+
+        <!-- Submit button -->
+        <div style="text-align: center;">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+{% endblock %}

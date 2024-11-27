@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Page</title>
+    <style>
+        body {
+            background-image: url('{% static "web/images/payment.avif" %}');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            height: 100vh; /* Ensures the background covers the full viewport height */
+        }
+        .payment-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Full height for centering */
+        }
+        .payment-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: darkgreen;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .payment-button:hover {
+            background-color: green;
+        }
+        .payment-button{
+        margin-top: 300px;
+        }
+    </style>
+</head>
+<body>
+<form method="post" action="#">
+<div class="payment-container">
+    <div class="my_div">
+        <h2>Proceed to Payment</h2><br>
+        <p>Username: {{request.session.Signup_Name}}</p>
+
+
+    <button type="submit" class="payment-button">Make Payment</button>
+        </div>
+</div>
+    </form>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="rzp_test_lNXSDhZZVv1D2w"
+    data-amount="{{pay_str}}"
+    data-currency="INR"
+    data-order_id="{{payment_order.id}}"
+    data-buttontext=""
+    data-name="Furniture"
+    data-description="Your description"
+    data-image=""
+    data-prefill.name="abc"
+    data-prefill.email="abc@gmail.com"
+    data-theme.color="#4badeb"
+ >
+
+</script>
+</body>
+</html>
