@@ -126,7 +126,7 @@
 
                         <div class="mb-3">
 <!--                            <label class="form-label">Price</label>-->
-                            <input type="hidden" id="price" name="product_mrp" class="form-control" value="{{ pro.Product_MRP }}">
+                            <input type="text" id="price" name="product_mrp" class="form-control" value="{{ pro.Product_MRP }}">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Total Price</label>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="mb-3">
 <!--                            <label class="form-label">User Name</label>-->
-                            <input type="hidden" value="{{request.session.Signup_Name}}" name="username" id="username" class="form-control">
+                            <input type="text" value="{{request.session.Signup_Name}}" name="username" id="username" class="form-control">
                         </div>
 
                         <button class="btn btn-primary" type="submit">Add to Cart</button>
